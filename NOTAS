@@ -1,0 +1,10 @@
+
+Librerías::
+
+->github.com/reliese/laravel: generar todos los modelos a partir de base de dato existente.
+    Pasos:
+    composer require reliese/laravel --dev
+    php artisan vendor:publish --tag=reliese-models
+    php artisan config:clear
+    php artisan code:models
+->
