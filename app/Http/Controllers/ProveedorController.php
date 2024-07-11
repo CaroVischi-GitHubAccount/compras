@@ -6,6 +6,7 @@ use App\Models\Proveedore;
 use App\Models\Estado;
 use App\Models\Producto;
 use Illuminate\Http\Request;
+use App\Http\Requests\StoreProveedorRequest;
 use Illuminate\Support\Facades\DB;
 
 
@@ -49,7 +50,7 @@ class ProveedorController extends Controller
         //return view('proveedores.create', compact('proveed'));
     //}
 
-    public function store(Request $request)
+    public function store(StoreProveedorRequest $request)
     {
         try{
             DB::beginTransaction();

@@ -36,19 +36,25 @@
                 <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                     <li class="nav-item" >
                         <a class="nav-link" style='background-color:black' href="{{URL::to('grupos')}}">
-                                <h6 style='color:white;'>grupos</h6>
+                                <h6 style='color:white;'>Grupos/Familias</h6>
                         </a>
                     </li>
                     <br>
                     <li class="nav-item" >
                         <a class="nav-link" style='background-color:black' href="{{URL::to('proveedores')}}">
-                                <h6 style='color:white;'>proveedores</h6>
+                                <h6 style='color:white;'>Proveedores</h6>
                         </a>
                     </li>
                     <br>
                     <li class="nav-item" >
                         <a class="nav-link" style='background-color:black' href="{{URL::to('productos')}}">
-                                <h6 style='color:white;'>productos</h6>
+                                <h6 style='color:white;'>Productos</h6>
+                        </a>
+                    </li>
+                    <br>
+                    <li class="nav-item" >
+                        <a class="nav-link" style='background-color:black' href="{{URL::to('compras')}}">
+                                <h6 style='color:white;'>Compras</h6>
                         </a>
                     </li>
                     <br>

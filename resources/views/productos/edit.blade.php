@@ -125,7 +125,7 @@
                                 <div class="input-group-prepend">
                                 <span class="input-group-text" id="inputGroup-sizing-default"> Margen : %</span>
                                 </div>
-                            <input type="number" min= 1 class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" 
+                            <input type="number" step="any" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" 
                             name='margen' id='margen' value='{{$producto->margen}}'>
                             </div>
                         </div>
@@ -134,7 +134,7 @@
                                 <div class="input-group-prepend">
                                 <span class="input-group-text" id="inputGroup-sizing-default"> Flete : $</span>
                                 </div>
-                                <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" 
+                                <input type="number" step="any" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" 
                                 name='flete' id='flete' value='{{$producto->flete}}'>
                             </div>
                         </div>

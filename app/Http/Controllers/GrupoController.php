@@ -20,6 +20,14 @@ class GrupoController extends Controller
 
     public function store(Request $request){
         //dd($request);
+
+        $request->validate([
+            'nombre' => 'required|max:250'
+        ], [
+            'nombre.required' => 'Debe asignar un nombre para el nuevo grupo.',
+            'nombre.max' => 'El nombre del grupo no debe superar los 250 caracteres.'
+        ]);
+
         try{
             
             DB::beginTransaction();

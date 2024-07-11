@@ -13,12 +13,18 @@ class FliaController extends Controller
 
     public function store(Request $request){
         //dd($request);
+        $request->validate([
+            'nombre_flia' => 'required|max:250'
+        ], [
+            'nombre_flia.required' => 'Debe asignar un nombre para la nueva familia.',
+            'nombre_flia.max' => 'El nombre de la familia no debe superar los 250 caracteres.'
+        ]);
 
         try{
             
             DB::beginTransaction();
             $flia = Familia::create([
-                'nombre' => $request->nombre,
+                'nombre' => $request->nombre_flia,
             ]);
             DB::commit();
         }

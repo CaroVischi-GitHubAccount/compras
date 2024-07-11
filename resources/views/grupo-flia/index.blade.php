@@ -41,8 +41,11 @@
                                                 <span class="input-group-text" id="inputGroup-sizing-default"> Nombre :</span>
                                         </div>
                                             <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" 
-                                            name='nombre' id='nombre' required>
+                                            name='nombre' id='nombre'>
                                     </div>
+                                    @error('nombre')
+                                        <span><b>{{$message}}</b></span><br> 
+                                    @enderror
                                     <br>
                                 <div class="modal-footer">
                                     <button type="submit" class="btn btn-primary">Guardar</button>
@@ -93,8 +96,11 @@
                                                 <span class="input-group-text" id="inputGroup-sizing-default"> Nombre :</span>
                                         </div>
                                             <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" 
-                                            name='nombre' id='nombre' required>
+                                            name='nombre_flia' id='nombre_flia'>
                                     </div>
+                                    @error('nombre_flia')
+                                        <span><b>{{$message}}</b></span><br> 
+                                    @enderror
                                     <br>
                                 <div class="modal-footer">
                                     <button type="submit" class="btn btn-primary">Guardar</button>

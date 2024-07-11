@@ -7,4 +7,9 @@ Librerías::
     php artisan vendor:publish --tag=reliese-models
     php artisan config:clear
     php artisan code:models
-->
+->Lenguaje español 
+    Pasos:
+    composer require laravel-lang/publisher laravel-lang/lang laravel-lang/attributes --dev
+    php artisan lang:add es
+    Cambiar en config/app:
+     'locale' => 'es',

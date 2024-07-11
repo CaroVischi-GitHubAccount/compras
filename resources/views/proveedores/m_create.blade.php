@@ -13,43 +13,58 @@
                             <span class="input-group-text" id="inputGroup-sizing-default"> Nombre :</span>
                     </div>
                         <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" 
-                        name='nombre' id='nombre' required>
+                        name='nombre' id='nombre' value="{{old('nombre')}}">
                     </div>
+                    @error('nombre')
+                        <span><b>{{$message}}</b></span><br> 
+                    @enderror
                     <div class="input-group mb-3">
                     <div class="input-group-prepend">
                             <span class="input-group-text" id="inputGroup-sizing-default"> CUIT :</span>
                     </div>
                         <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" 
-                        name='cuit' id='cuit' required>
+                        name='cuit' id='cuit' value="{{old('cuit')}}">
                     </div>
+                    @error('cuit')
+                        <span><b>{{$message}}</b></span><br> 
+                    @enderror
                     <div class="input-group mb-3">
                     <div class="input-group-prepend">
                             <span class="input-group-text" id="inputGroup-sizing-default"> Dirección :</span>
                     </div>
                         <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" 
-                        name='dir' id='dir' required>
+                        name='dir' id='dir' value="{{old('dir')}}">
                     </div>
+                    @error('dir')
+                        <span><b>{{$message}}</b></span><br> 
+                    @enderror
                     <div class="input-group mb-3">
                     <div class="input-group-prepend">
                             <span class="input-group-text" id="inputGroup-sizing-default"> Teléfono :</span>
                     </div>
                         <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" 
-                        name='tel' id='tel' required>
+                        name='tel' id='tel' value="{{old('tel')}}">
                     </div>
+                    @error('tel')
+                        <span><b>{{$message}}</b></span><br> 
+                    @enderror
                     <div class="input-group mb-3">
                     <div class="input-group-prepend">
                             <span class="input-group-text" id="inputGroup-sizing-default"> Mail :</span>
                     </div>
                         <input type="mail" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" 
-                        name='mail' id='mail'>
+                        name='mail' id='mail' value="{{old('mail')}}">
                     </div>
                     <div class="input-group mb-3">
                     <div class="input-group-prepend">
                             <span class="input-group-text" id="inputGroup-sizing-default"> Localidad :</span>
                     </div>
                         <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" 
-                        name='localidad' id='localidad' required>
+                        name='localidad' id='localidad' value="{{old('localidad')}}">
                     </div>
+                    @error('localidad')
+                        <span><b>{{$message}}</b></span><br> 
+                    @enderror
                     <br>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>

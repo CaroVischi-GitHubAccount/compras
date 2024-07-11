@@ -7,6 +7,7 @@ use App\Models\Grupo;
 use App\Models\Familia;
 use App\Models\Producto;
 use Illuminate\Http\Request;
+use App\Http\Requests\StoreProductoRequest;
 use Illuminate\Support\Facades\DB;
 
 
@@ -57,23 +58,24 @@ class ProductoController extends Controller
         return view('productos.create', compact('prod', 'grupos', 'familias', 'proveedores'));
     }
 
-    public function store(Request $request)
+    public function store( StoreProductoRequest $request)
     {
-        /*$cant_prods=DB::select('select count(id) from productos as q');
-        //dd($cant_prods);
-        $nro_unid=(int)$cant_prods[0]+1;
-        dd($nro_unid);
-        $cod_int=$request->grupo.$request->familia.$nro_unid;
-        dd($cod_int);*/
-        //dd($request);
+        //$producto = $request->validated();
+        //dd ($producto);
+        $query_cant=DB::select('select count(id) as "q" from productos');
+        //dd($query_cant);
+        $cant= ((int)$query_cant[0]->q)+1;
+        $nuevo_cod=$request->grupo . $request->familia . $cant;
+        //dd($nuevo_cod);
         try{
+            //$producto = $request->validated();
             DB::beginTransaction();
             $producto = Producto::create([
                 'id_grupo' => $request->grupo,
                 'id_flia' => $request->familia,
                 'id_prov' => $request->proveedor,
                 'EAN' => $request->EAN,
-                'cod_int' => 112233,
+                'cod_int' => $nuevo_cod,
                 'stock_min' => $request->stock_min,
                 'descrip' => $request->descrip,
                 'observ' => $request->observ,
@@ -86,12 +88,14 @@ class ProductoController extends Controller
         }
         catch(\Exception $e){
                 DB::rollback();
-                //dd($e);
+                dd($e);
                 return redirect()->route('productos')
                     ->with('error', 'Ocurrió un error al crear el registro.');
         }
+
         return redirect()->route('productos')
             ->with('success', 'Se agregó un proveedor nuevo al registro.');
+
     }
     
     public function show($id)
@@ -150,9 +154,6 @@ class ProductoController extends Controller
                 ]);
             }
             $prod=Producto::where('id', '=', $id)->update([
-                //'id_grupo' => $request->grupo,
-                //'id_flia' => $request->familia,
-                //'id_prov' => $request->proveedor,
                 'EAN' => $request->EAN,
                 'stock_min' => $request->stock_min,
                 'descrip' => $request->descrip,

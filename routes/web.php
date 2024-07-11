@@ -13,23 +13,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-/*Route::get('/', function () {
-    return view('welcome');
-});*/
 Route::get('/', function () {
     return view('home');
 });
-
-/*EJ crud completo
-
-  GET|HEAD        actividades .................................................... actividades.index › ActivController@index  
-  POST            actividades .................................................... actividades.store › ActivController@store  
-  GET|HEAD        actividades/create .............................................. actividades.create › ActivController@create  
-  GET|HEAD        actividades/{actividade} ........................................ actividades.show › ActivController@show  
-  PUT|PATCH       actividades/{actividade} ........................................ actividades.update › ActivController@update  
-  DELETE          actividades/{actividade} ......................................... actividades.destroy › ActivController@destroy  
-  GET|HEAD        actividades/{actividade}/edit .................................... actividades.edit › ActivController@edit
-*/
 
 
 Route::get('/grupos', [App\Http\Controllers\GrupoController::class, 'index'])->name('grupos');
@@ -58,3 +44,21 @@ Route::get('/productos_create', [App\Http\Controllers\ProductoController::class,
 Route::get('/productos_edit/{id}', [App\Http\Controllers\ProductoController::class, 'edit'])->name('productos.edit');
 Route::post('/productos_update/{id}', [App\Http\Controllers\ProductoController::class, 'update'])->name('productos.update');
 Route::get('/productos_delete/{id}', [App\Http\Controllers\ProductoController::class, 'destroy'])->name('productos.delete');
+
+/*
+Route::get('/compras', [App\Http\Controllers\CompraController::class, 'index'])->name('compras');
+Route::get('/compras_buscador', [App\Http\Controllers\CompraController::class, 'buscador'])->name('compra.buscador');
+Route::get('/compras_show/{id}', [App\Http\Controllers\CompraController::class, 'show'])->name('compras.show');
+Route::post('/compras_store', [App\Http\Controllers\CompraController::class, 'store'])->name('compras.store');
+Route::get('/compras_create', [App\Http\Controllers\CompraController::class, 'create'])->name('compras.create');
+Route::get('/compras_edit/{id}', [App\Http\Controllers\CompraController::class, 'edit'])->name('compras.edit');
+Route::post('/compras_update/{id}', [App\Http\Controllers\CompraController::class, 'update'])->name('compras.update');
+Route::get('/compras_delete/{id}', [App\Http\Controllers\CompraController::class, 'destroy'])->name('compras.delete');
+*/
+
+
+Route::post('/detallecompras_store', [App\Http\Controllers\DetalleCompraController::class, 'store'])->name('detallecompras.store');
+Route::get('/detallecompras_delete/{id}', [App\Http\Controllers\DetalleCompraController::class, 'destroy'])->name('detallecompras.delete');
+Route::get('/detallecompras_create', [App\Http\Controllers\DetalleCompraController::class, 'create'])->name('detallecompras.create');
+
+Route::get('/get_prods', [App\Http\Controllers\DetalleCompraController::class, 'getProds'])->name('get_prods');
