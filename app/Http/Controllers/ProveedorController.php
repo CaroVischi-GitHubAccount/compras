@@ -17,9 +17,10 @@ class ProveedorController extends Controller
         //$proveeds = Proveedore::where('id_estado','=', 1)->get();
         //->paginate(10);
         $proveedores = DB::table('proveedores')
-        ->join('estados', 'proveedores.id_estado', '=','estados.id')
-        ->select('proveedores.*','estados.nombre as estado')
-        ->get();
+            ->join('estados', 'proveedores.id_estado', '=','estados.id')
+            ->select('proveedores.*','estados.nombre as estado')
+            ->get();
+
         return view('proveedores.index', compact('proveedores'));
             //->with('i', (request()->input('page', 1) - 1) * $activs->perPage());
     }

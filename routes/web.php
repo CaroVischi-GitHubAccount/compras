@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CompraController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,10 +14,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
+/* Route::get('/', function () {
     return view('home');
-});
+}); */
 
+Route::get('/', function () {
+    return view('dashboard');
+});
 
 Route::get('/grupos', [App\Http\Controllers\GrupoController::class, 'index'])->name('grupos');
 Route::post('/grupos_store', [App\Http\Controllers\GrupoController::class, 'store'])->name('grupos.store');
@@ -44,6 +48,18 @@ Route::get('/productos_create', [App\Http\Controllers\ProductoController::class,
 Route::get('/productos_edit/{id}', [App\Http\Controllers\ProductoController::class, 'edit'])->name('productos.edit');
 Route::post('/productos_update/{id}', [App\Http\Controllers\ProductoController::class, 'update'])->name('productos.update');
 Route::get('/productos_delete/{id}', [App\Http\Controllers\ProductoController::class, 'destroy'])->name('productos.delete');
+
+Route::controller(CompraController::class)->group(function(){
+    Route::get('compras', 'index');
+    Route::get('compras/crear', 'create')->name('compras.create');
+    Route::get('compras/listar', 'obtenerCompras')->name('compras.listar');
+    Route::get('compras/listarProductos', 'listarProductos')->name('compras.listarProductos');
+    Route::get('compras/calcularTotal', 'calcularTotal')->name('compras.calcularTotal');
+    Route::get('compras/calcularDescuento', 'calcularDescuento')->name('compras.calcularDescuento');
+    Route::get('compras/calcularIva', 'calcularIva')->name('compras.calcularIva');
+    Route::get('compras/detallespdf/{id}', 'detallespdf')->name('compras.detallespdf');
+    Route::get('compras/seleccionarProducto', 'buscadorProducto')->name('compras.buscarProducto');
+});
 
 /*
 Route::get('/compras', [App\Http\Controllers\CompraController::class, 'index'])->name('compras');

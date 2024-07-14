@@ -34,6 +34,7 @@ class Proveedore extends Model
 	];
 
 	protected $fillable = [
+		'id',
 		'id_estado',
 		'cuit',
 		'nombre',
@@ -42,4 +43,8 @@ class Proveedore extends Model
 		'mail',
 		'localidad'
 	];
+
+	public function compras() {
+		return $this -> hasMany(Compra::class, 'id');
+	}
 }

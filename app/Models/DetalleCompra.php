@@ -17,7 +17,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $id_prod
  * @property int $cant
  * @property float $precio_unit
- * @property float $total
+ * @property float $importe
  * @property Carbon $created_at
  * @property Carbon|null $updated_at
  *
@@ -32,7 +32,7 @@ class DetalleCompra extends Model
 		'id_prod' => 'int',
 		'cant' => 'int',
 		'precio_unit' => 'float',
-		'total' => 'float'
+		'importe' => 'float'
 	];
 
 	protected $fillable = [
@@ -40,6 +40,17 @@ class DetalleCompra extends Model
 		'id_prod',
 		'cant',
 		'precio_unit',
-		'total'
+		'importe'
 	];
+
+	// Definir la relación con Compra
+    public function compra()
+    {
+        return $this->belongsTo(Compra::class, 'id_compra');
+    }
+
+	public function producto()
+    {
+        return $this->belongsTo(Producto::class, 'id_prod');
+    }
 }

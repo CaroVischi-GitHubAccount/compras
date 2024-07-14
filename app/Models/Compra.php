@@ -22,6 +22,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property float $descuesto
  * @property float $recargo
  * @property float $impuestos
+ * @property float $otros_impuestos
  * @property float $flete
  * @property float $total
  * @property Carbon $created_at
@@ -36,12 +37,14 @@ class Compra extends Model
 	protected $casts = [
 		'id_prov' => 'int',
 		'id_estado' => 'int',
-		'fecha_emision' => 'datetime',
-		'fecha_vto' => 'datetime',
+		// Comente porque me traia de esta forma: 2024-07-13T00:00:00.000000Z
+		/* 'fecha_emision' => 'date', */
+		/* 'fecha_vto' => 'date', */
 		'subtotal' => 'float',
 		'descuesto' => 'float',
 		'recargo' => 'float',
 		'impuestos' => 'float',
+		'otros_impuestos' => 'float',
 		'flete' => 'float',
 		'total' => 'float'
 	];
@@ -55,8 +58,19 @@ class Compra extends Model
 		'subtotal',
 		'descuesto',
 		'recargo',
-		'impuestos',
+		'iva',
+		'otros_impuestos',
 		'flete',
 		'total'
 	];
+	
+	public function detalles()
+    {
+        return $this->hasMany(DetalleCompra::class, 'id_compra');
+    }
+
+	public function proveedor()
+    {
+        return $this->belongsTo(Proveedore::class, 'id_prov');
+    }
 }

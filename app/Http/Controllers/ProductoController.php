@@ -94,7 +94,7 @@ class ProductoController extends Controller
         }
 
         return redirect()->route('productos')
-            ->with('success', 'Se agregó un proveedor nuevo al registro.');
+            ->with('success', 'Se agregó un producto nuevo al registro.');
 
     }
     
