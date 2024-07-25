@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CompraController;
+use App\Http\Controllers\InventarioController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -52,6 +53,9 @@ Route::get('/productos_delete/{id}', [App\Http\Controllers\ProductoController::c
 Route::controller(CompraController::class)->group(function(){
     Route::get('compras', 'index');
     Route::get('compras/crear', 'create')->name('compras.create');
+    Route::get('compras/editar', 'edit')->name('compras.edit');
+    Route::get('compras/update', 'update')->name('compras.update');
+    Route::get('compras/delete', 'delete')->name('compras.delete');
     Route::get('compras/listar', 'obtenerCompras')->name('compras.listar');
     Route::get('compras/listarProductos', 'listarProductos')->name('compras.listarProductos');
     Route::get('compras/calcularTotal', 'calcularTotal')->name('compras.calcularTotal');
@@ -59,6 +63,13 @@ Route::controller(CompraController::class)->group(function(){
     Route::get('compras/calcularIva', 'calcularIva')->name('compras.calcularIva');
     Route::get('compras/detallespdf/{id}', 'detallespdf')->name('compras.detallespdf');
     Route::get('compras/seleccionarProducto', 'buscadorProducto')->name('compras.buscarProducto');
+
+    Route::get('compras/productos', 'productos')->name('compras.productos');
+});
+
+Route::controller(InventarioController::class)->group(function(){
+    Route::get('inventario', 'index');
+    
 });
 
 /*

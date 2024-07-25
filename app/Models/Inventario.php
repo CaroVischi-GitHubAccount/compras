@@ -32,7 +32,7 @@ class Inventario extends Model
 		'id_prov' => 'int',
 		'id_prod' => 'int',
 		'stock' => 'int',
-		'fecha' => 'datetime',
+		/* 'fecha' => 'datetime', */
 		'total' => 'float'
 	];
 
@@ -44,4 +44,8 @@ class Inventario extends Model
 		'fecha',
 		'total'
 	];
+
+	public function proveedores() {
+		return $this -> belongsTo(Proveedore::class, 'id_prov');
+	}
 }

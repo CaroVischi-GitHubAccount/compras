@@ -39,6 +39,8 @@
                     <div id="alertModal"></div>
 
                     <div class="row">
+                        <input type="show" name="idAjax" class="form-control" id="idAjax" required>
+
                         <div class="col-lg-2">
                             <label class="form-label" for="nro_fc">Número de factura</label>
                             <input class="form-control form-control-sm" type="text" name="nro_fc" id="nro_fc">
@@ -154,7 +156,8 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button onclick="agregar()" class="btn btn-primary ml-2 mr-2 btn-sm">Agregar</button>
+                    <button id="agregar-data" onclick="agregar()" class="btn btn-primary ml-2 mr-2 btn-sm">Agregar</button>
+                    <button id="editar-data" onclick="actualizar()" class="btn btn-primary ml-2 mr-2 btn-sm" style="display:none;">Actualizar</button>
                     <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cerrar</button>
                 </div>
            {{--  </form> --}}

@@ -32,7 +32,7 @@
 
             <div class="card">
                 <div class="card-header pb-2">
-                    <button class="btn btn-primary float-end btn-sm" type="button" data-toggle="modal" data-target="#modal_generar_compras" style="font-family:arial; font-size: 13px;">Agregar compras</button>
+                    <button onclick="modalNuevo()" class="btn btn-primary float-end btn-sm" type="button" data-toggle="modal" data-target="#modal_generar_compras" style="font-family:arial; font-size: 13px;">Agregar compras</button>
                 </div>
 
                 <div class="card-body">
@@ -107,18 +107,18 @@
                             let url = '{{ route("compras.detallespdf", ":id") }}';
                             url = url.replace(':id', row.id);
                             let baseUrl = "{{ URL::asset('img/3917112.png') }}";
-
-                            let urlEditar = '#';
-                            urlEditar = urlEditar.replace(':id', row.id);
                             let editarUrl = "{{ URL::asset('img/10742923.png') }}";
+                            let eliminarUrl = "{{ URL::asset('img/10741561.png') }}";
 
                             return '<a class="btn btn-sm btn-outline-primary" href="' + url + '" target="_blank">' +
                                 '<img src="' + baseUrl + '" height="22px" width="22px" alt="Ver"></a>' + ' ' +
-                                '<a class="btn btn-sm btn-outline-warning" data-toggle="modal" data-target="#modal_generar_compras" href="' + urlEditar + '">' +
-                                '<img src="' + editarUrl + '" height="22px" width="22px" alt="Ver"></a>';
+                                '<button onclick="ModalForm(' + row.id + ')" data-toggle="modal" data-target="#modal_generar_compras" class="btn btn-sm btn-outline-warning">' +
+                                '<img src="' + editarUrl + '" height="22px" width="22px" alt="Ver"></button>' +
+                                
+                                '<button onclick="eliminar(' + row.id + ')" class="btn btn-sm btn-outline-danger ml-1">' +
+                                '<img src="' + eliminarUrl + '" height="22px" width="22px" alt="Ver"></button>';
                         }
                     },
-
                 ],
                 
                 "dom": 'rtip',
@@ -315,6 +315,217 @@
                 },
             });
         }
+
+        function actualizar() {
+            var datos = []; // Array para almacenar los datos de cada fila
+            let id    = $('#idAjax').val();
+
+            let fecha_emision   = $('#fecha_emision').val();
+            let fecha_vto       = $('#fecha_vto').val();
+            let nro_fc          = $('#nro_fc').val();
+            let id_prov         = $('#id_prov').val();
+
+            let subtotal        = $('#subtotal').text();
+            let descuento       = $('#totalDescuento').text();
+            let iva             = $('#totaliva').text();
+            let otros_impuestos = $('#totalOtrosImp').text();
+            let retencion       = $('#totalRetencion').text();
+            let flete           = $('#totalFlete').text();
+            let recargo         = $('#totalRecargo').text();
+            let totalGeneral    = $('#totalGeneral').text();
+
+            let table = $('#lista_productos').DataTable();
+
+            table.rows().every(function() {
+                let data = this.data();
+
+                let idAjax   = data.id;
+
+                let cantidad    = $(this.node()).find('input[name=cantidad]').val();
+                let precio_unit = $(this.node()).find('input[name=precio_unit]').val();
+                let importe     = $(this.node()).find('input[name=importe]').val();
+
+                // Crea un objeto con los datos de cada fila y agrégalo al array
+                var fila = {
+                    productoSel  : idAjax,
+                    cantidad     : cantidad,
+                    precio_unit  : precio_unit,
+                    importe      : importe
+                };
+
+                datos.push(fila);
+            });
+
+            $.ajax({
+                url: '{{ route("compras.update") }}', // Ruta para actualizar datos
+                method: 'GET', // Método POST para enviar datos al servidor
+                data: {
+                    id              : id,
+                    fecha_emision   : fecha_emision,
+                    fecha_vto       : fecha_vto,
+                    nro_fc          : nro_fc,
+                    id_prov         : id_prov,
+                    subtotal        : subtotal,
+                    descuento       : descuento,
+                    iva             : iva,
+                    otros_impuestos : otros_impuestos,
+                    retencion       : retencion,
+                    flete           : flete,
+                    recargo         : recargo,
+                    total           : totalGeneral,
+                    datos           : datos,
+                    _token          : $('input[name=_token]').val(),
+                },
+                dataType: 'json',
+                success: function(res) {
+                    if (res.success) {
+                        Swal.fire({
+                            position: "top-end",
+                            icon: "success",
+                            title: "Se actualizó correctamente",
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+
+                        window.location.reload();
+                    } else {
+                        toastr.error(res.message);
+                    }
+                },
+                error: function(err) {
+                    if (err.status == 422) {
+                        $.each(err.responseJSON.errors, function(i, error) {
+                            $('#alertModal').html(`<div id='alert-modal' class="alert alert-danger" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="false">&times;</span></button><ul><li>${error}.</li></ul></div>`);
+                        });
+                    }
+                },
+            });
+        }
+
+        function ModalForm(id){
+            $('#agregar-data').hide();
+            $('#editar-data').show();
+
+            $.ajax({
+                url: '{{route("compras.listar")}}',
+                
+                data: {id},
+                
+                accept: "application/json",
+
+                type : 'GET',
+
+                contentType: 'application/json',
+
+                dataType: 'json',
+
+                success: function(res){
+                    $('#idAjax').val(res.id);
+                    $('#nro_fc').val(res.nro_fc);
+                    $('#fecha_emision').val(res.fecha_emision);
+                    $('#fecha_vto').val(res.fecha_vto);
+                    $('#id_prov').val(res.id_prov);
+                    $('#subtotal').text(res.subtotal);
+                    $('#totalDescuento').text(res.descuento);
+                    $('#totaliva').text(res.iva);
+                    $('#totalOtrosImp').text(res.otros_impuestos);
+                    $('#totalFlete').text(res.flete);
+                    $('#totalRetencion').text(res.retencion);
+                    $('#totalGeneral').text(res.total);
+                }
+            });
+            
+             // Segunda solicitud AJAX para obtener los productos asociados a la compra
+            $.ajax({
+                url: '{{ route("compras.productos") }}',
+                data: { id },
+                type: 'GET',
+                dataType: 'json',
+                success: function(productos) {
+                    // Limpiar la tabla de productos antes de agregar nuevos datos
+                    let table2 = $('#lista_productos').DataTable();
+                    table2.clear().draw();
+                    
+                    // Iterar sobre los productos y agregarlos a la tabla
+                    $.each(productos, function(index, producto) {
+                        table2.row.add({
+                            'id'          : producto.id,
+                            'cod_int'     : producto.cod_int,
+                            'descrip'     : producto.descrip,
+                            'cantidad'    : '<input class="form-control form-control-sm cantidad" name="cantidad" type="number" value="' + producto.cant + '" required>',
+                            'precio_unit' : '<input class="form-control form-control-sm precio_unit" name="precio_unit" type="number" value="' + producto.precio_unit + '" required>',
+                            'importe'     : '<input class="form-control form-control-sm importe" name="importe" type="number" value="' + producto.importe + '" readonly>',
+                            'acciones'    : '<center>' +
+                                            '<span class="btnEliminarProducto text-danger px-1" style="cursor:pointer;" data-bs-toggle="tooltip" data-bs-placement="top" title="Eliminar Producto">' +
+                                            '<i class="fas fa-trash fs-5"></i>' + '</span>'
+                        }).draw();
+                    });
+                },
+                error: function(err) {
+                    console.error('Error al obtener los productos:', err);
+                }
+            });
+        }
+
+        function modalNuevo(){
+            $('#agregar-data').show();
+            $('#editar-data').hide();
+
+            $('#idAjax').val('');
+            $('#nro_fc').val('');
+            $('#fecha_emision').val('');
+            $('#fecha_vto').val('');
+            $('#id_prov').val('');
+            $('#subtotal').text('0.00');
+            $('#totalDescuento').text('0.00');
+            $('#totaliva').text('0.00');
+            $('#totalOtrosImp').text('0.00');
+            $('#totalFlete').text('0.00');
+            $('#totalRecargo').text('0.00');
+            $('#totalRetencion').text('0.00');
+            $('#totalGeneral').text('0.00');
+
+            var table = $('#lista_productos').DataTable();
+            table.clear().draw();
+        }
+
+        function eliminar(id){
+            Swal.fire({
+                title: '¿Estás seguro?',
+                text : 'No vas a poder revertir esta acción.',
+                icon : 'warning',
+                showCancelButton: true,
+                cancelButtonText: 'Cancelar',
+                confirmButtonColor: '#3085d6',
+                confirmButtonText: 'Eliminar',
+            }).then((result) =>{
+                if(result.isConfirmed){
+                    var token = $('meta[name="csrf-token"]').attr('content');
+
+                    $.ajax({
+                        url:'{{route("compras.delete")}}',
+                        data: {id},
+                        type: 'GET',
+                        headers: {
+                            'X-CSRF-TOKEN': token
+                        },
+                        success: function(res){
+                            Swal.fire({
+                            icon: 'success',
+                            title: 'Borrado',
+                            text: `${res.success}`,
+                            showConfirmButton: false,
+                            timer: 1500
+                        }),
+                        window.location.reload(); //refrescar pagina sin recargar 
+                        },
+                        error : function(xhr, status){
+                            Swal.fire('Error', 'Hubo un problema al querer eliminar', 'error');
+                        },
+                    });
+                }   
+            })
+        };
 
         function cargarProductos() {
             var id = $('#productoSel').val();

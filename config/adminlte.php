@@ -315,6 +315,10 @@ return [
             'text' => 'Compras',
             'url' => 'compras',
         ],
+        [
+            'text' => 'inventario',
+            'url' => 'inventario',
+        ],
     ],
 
     /*

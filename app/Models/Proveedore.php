@@ -47,4 +47,8 @@ class Proveedore extends Model
 	public function compras() {
 		return $this -> hasMany(Compra::class, 'id');
 	}
+
+	public function inventarios() {
+		return $this -> hasMany(Inventario::class, 'id');
+	}
 }

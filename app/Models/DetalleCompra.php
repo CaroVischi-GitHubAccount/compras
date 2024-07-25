@@ -36,6 +36,7 @@ class DetalleCompra extends Model
 	];
 
 	protected $fillable = [
+		'id',
 		'id_compra',
 		'id_prod',
 		'cant',
